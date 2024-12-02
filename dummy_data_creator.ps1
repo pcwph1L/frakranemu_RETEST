@@ -1,5 +1,5 @@
 # Parameters
-$baseFolder = "C:\Users\Public\DummyData" # Change to your desired base directory
+$baseFolder = "C:\Users\retest2\DummyData" # Change to your desired base directory
 $fileCount = 1000               # Number of files for each extension
 
 # Create the base directory if it does not exist
