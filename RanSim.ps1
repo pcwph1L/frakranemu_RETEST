@@ -29,7 +29,7 @@ your simulation, but you also have the option to decrypt the files with the same
 # Define parameters and their defaults
 param([string]$Mode,
       [string]$TargetPath = "C:\RanSim",
-      [string]$Extension = ".encrypted",
+      [string]$Extension = ".RETEST",
       [string]$Key = "Q5KyUru6wn82hlY9k8xUjJOPIC9da41jgRkpt21jo2L="
 )
 
@@ -37,7 +37,7 @@ param([string]$Mode,
 $TargetFiles = '*.pdf','*.xls*','*.ppt*','*.doc*','*.accd*','*.rtf','*.txt','*.csv','*.jpg','*.jpeg','*.png','*.gif','*.avi','*.midi','*.mov','*.mp3','*.mp4','*.mpeg','*.mpeg2','*.mpeg3','*.mpg','*.ogg'
 
 # Import FileCryptography module
-Import-Module "$PSScriptRoot\FileCryptography.psm1"
+Import-Module ".\FileCryptography.psm1"
 
 if ($mode -eq "encrypt") {
     # Gather all files from the target path and its subdirectories
