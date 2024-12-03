@@ -1,6 +1,6 @@
 # Parameters
 $baseFolder = (Get-Location).Path # Use the current directory as the base directory
-$fileCount = 5000                # Number of files for each extension
+$fileCount = 1000                # Number of files for each extension
 
 # Array of file extensions
 $fileExtensions = @(".doc", ".docx", ".pdf", ".ppt", ".pptx", ".txt", ".xls")
