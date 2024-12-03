@@ -20,7 +20,7 @@
 # Define parameters and their defaults
 param([string]$Mode,
       [string]$LastName = ".retest",
-      [string]$TargetPath = "C:\Users\retest2\DummyData",
+      [string]$TargetPath = "C:\Users\retest2\Pictures\",
       [string]$Callsign = "QRkpt21jo2Lu6wn82hlY9k8xUj5KyUrJOPIC9da41jg="
 )
 
