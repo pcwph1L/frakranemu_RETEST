@@ -1,11 +1,6 @@
 # Parameters
-$baseFolder = "C:\Users\retest2\DummyData" # Change to your desired base directory
-$fileCount = 1000               # Number of files for each extension
-
-# Create the base directory if it does not exist
-if (-Not (Test-Path -Path $baseFolder)) {
-    New-Item -ItemType Directory -Path $baseFolder | Out-Null
-}
+$baseFolder = (Get-Location).Path # Use the current directory as the base directory
+$fileCount = 5000                # Number of files for each extension
 
 # Array of file extensions
 $fileExtensions = @(".doc", ".docx", ".pdf", ".ppt", ".pptx", ".txt", ".xls")
@@ -25,12 +20,13 @@ foreach ($extension in $fileExtensions) {
         $fileName = "DummyFile_$i$extension"
         $filePath = Join-Path -Path $subfolderPath -ChildPath $fileName
 
-        # Create a dummy file with some content
-        $content = "This is a dummy ${extension} file generated on $(Get-Date)."
+        # Create a random file size between 100KB and 3MB
+        $randomSize = Get-Random -Minimum 102400 -Maximum 3145728 # Size in bytes
+        $dummyContent = "A" * $randomSize # Generate dummy content of the required size
 
         try {
-            # Set content with encoding UTF-8 to handle special characters in path
-            Set-Content -Path $filePath -Value $content -Encoding UTF8
+            # Write the content to the file
+            Set-Content -Path $filePath -Value $dummyContent -Encoding UTF8
         } catch {
             Write-Host "Error creating file ${filePath}: $($_.Exception.Message)" -ForegroundColor Red
         }
